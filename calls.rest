@@ -1,0 +1,23 @@
+### GET
+GET http://localhost:8080/api/employee/1
+
+
+
+### GET All
+GET http://localhost:8080/api/employee
+
+
+
+
+### Create new
+POST http://localhost:8080/api/employee
+Content-Type: application/json; charset=utf-8
+
+{
+    "Id": 4,
+    "Age": 16,
+    "City": "Nacka",
+    "Namn": "Oliver"        
+}
+
+
