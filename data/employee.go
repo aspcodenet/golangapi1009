@@ -6,8 +6,8 @@ package data
 type Employee struct {
 	Id   int
 	Age  int
-	City string
-	Namn string
+	City string `json:"city"`
+	Namn string `json:"name"`
 }
 
 // MEDLEMSFUNKTION

@@ -9,6 +9,11 @@ GET http://localhost:8080/api/employee
 
 
 
+### GET All
+DELETE http://localhost:8080/api/employee/1
+
+
+
 ### Create new
 POST http://localhost:8080/api/employee
 Content-Type: application/json; charset=utf-8
@@ -18,6 +23,19 @@ Content-Type: application/json; charset=utf-8
     "Age": 16,
     "City": "Nacka",
     "Namn": "Oliver"        
+}
+
+
+
+### Create new
+PUT http://localhost:8080/api/employee/4
+Content-Type: application/json; charset=utf-8
+
+{
+    "Id": 4,
+    "Age": 16,
+    "City": "Nacka",
+    "Namn": "Oliver2"        
 }
 
 

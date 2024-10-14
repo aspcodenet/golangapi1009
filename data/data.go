@@ -1,27 +1,45 @@
 package data
 
-var employees []Employee
+import (
+	"github.com/glebarez/sqlite"
+	"gorm.io/gorm"
+)
 
 func GetAllEmployees() []Employee {
+	var employees []Employee
+	db.Find(&employees) // select * from Employee
 	return employees
 }
 
 func CreateNewEmployee(newEmployee Employee) {
-	employees = append(employees, newEmployee)
+	db.Create(&newEmployee)
+}
+
+func UpdateEmployee(employee Employee) {
+	db.Save(&employee)
+}
+
+func DeleteEmployee(employee *Employee) {
+	db.Delete(&employee)
 }
 
 func GetEmployee(id int) *Employee {
-	for _, employee := range employees {
-		if employee.Id == id {
-			return &employee
-		}
-	}
-	return nil
+	var employee Employee
+	db.First(&employee, "id = ?", id)
+	return &employee
 }
 
-func Init() {
+var db *gorm.DB
 
-	employees = append(employees, Employee{Id: 1, Age: 51, Namn: "Stefan", City: "Test"})
-	employees = append(employees, Employee{Id: 2, Age: 15, Namn: "Oliver", City: "Test"})
-	employees = append(employees, Employee{Id: 3, Age: 21, Namn: "Josefine", City: "Test"})
+func Init() {
+	db, _ = gorm.Open(sqlite.Open("./gorm.db"), &gorm.Config{})
+	db.AutoMigrate(&Employee{})
+
+	var antal int64
+	db.Model(&Employee{}).Count(&antal) // select count(*) from Employee
+	if antal == 0 {
+		db.Create(&Employee{Age: 50, Namn: "Stefan Holmberg", City: "Teststad"})
+		db.Create(&Employee{Age: 14, Namn: "Oliver Holmberg", City: "Teststad"})
+		db.Create(&Employee{Age: 20, Namn: "Josefine Holmberg", City: "Uppsala"})
+	}
 }
