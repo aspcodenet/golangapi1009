@@ -85,8 +85,17 @@ func handleAbout(c *gin.Context) {
 	c.HTML(http.StatusOK, "about.html", &PageView{Title: "test", Rubrik: data.GetEmployee(1).Namn})
 }
 
+var config Config
+
 func main() {
-	data.Init()
+	readConfig(&config)
+
+	data.Init(config.Database.File,
+		config.Database.Server,
+		config.Database.Database,
+		config.Database.Username,
+		config.Database.Password,
+		config.Database.Port)
 
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/**")
